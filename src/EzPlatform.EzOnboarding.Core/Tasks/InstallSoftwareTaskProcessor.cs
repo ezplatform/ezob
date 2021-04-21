@@ -74,13 +74,15 @@ namespace EzPlatform.EzOnboarding.Core.Tasks
             var inputs = (configTask.Inputs as InstallSoftwareInputs)!;
             try
             {
-                var processResult = await ProcessHelper.RunAsync(inputs.ValidationExecutor, inputs.ValidationProcessArgs);
+                var processResult = await ProcessHelper.RunAsync(
+                    filename: inputs.ValidationExecutor,
+                    arguments: inputs.ValidationProcessArgs,
+                    throwOnError: false);
 
                 var processOutput = processResult.StandardOutput.Trim();
 
                 return processOutput.Equals("ok", StringComparison.OrdinalIgnoreCase)
-                    || processOutput.Equals("1")
-                    || processOutput.Equals("true", StringComparison.OrdinalIgnoreCase);
+                    || !string.IsNullOrEmpty(processOutput);
             }
             catch (Exception ex)
             {
