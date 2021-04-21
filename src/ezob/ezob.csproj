@@ -3,15 +3,14 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>EzPlatform.EzOnboarding</RootNamespace>
+    <AssemblyName>ezob</AssemblyName>
+    <PackageId>EzPlatform.EzOnboarding</PackageId>
+    <ToolCommandName>ezob</ToolCommandName>
+    <PackAsTool>true</PackAsTool>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\EzPlatform.EzOnboarding.Core\EzPlatform.EzOnboarding.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="*.yml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>

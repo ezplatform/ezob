@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using EzPlatform.EzOnboarding.Core;
 using EzPlatform.EzOnboarding.Core.Serialization;
 
-namespace ezob
+namespace EzPlatform.EzOnboarding
 {
     /// <summary>
     /// Main class to run the ezob command line app.
