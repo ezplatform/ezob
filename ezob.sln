@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4F420F4C-2BD3-4B63-9116-65A94D175A79}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
+		ezob.ruleset = ezob.ruleset
+		ezob.sln.DotSettings = ezob.sln.DotSettings
+		NuGet.Config = NuGet.Config
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A7A03B7D-3C79-4A10-BED5-981441880557}"
+	ProjectSection(SolutionItems) = preProject
+		src\samples\internet-ezob.yml = src\samples\internet-ezob.yml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EzPlatform.EzOnboarding.Core", "src\EzPlatform.EzOnboarding.Core\EzPlatform.EzOnboarding.Core.csproj", "{56C2F672-FA08-4C4F-BE74-AAFD22E78640}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ezob", "src\ezob\ezob.csproj", "{AC324904-737F-42E4-93D0-C808B08F56FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{56C2F672-FA08-4C4F-BE74-AAFD22E78640}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56C2F672-FA08-4C4F-BE74-AAFD22E78640}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56C2F672-FA08-4C4F-BE74-AAFD22E78640}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56C2F672-FA08-4C4F-BE74-AAFD22E78640}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC324904-737F-42E4-93D0-C808B08F56FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC324904-737F-42E4-93D0-C808B08F56FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC324904-737F-42E4-93D0-C808B08F56FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC324904-737F-42E4-93D0-C808B08F56FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{56C2F672-FA08-4C4F-BE74-AAFD22E78640} = {A7A03B7D-3C79-4A10-BED5-981441880557}
+		{AC324904-737F-42E4-93D0-C808B08F56FC} = {A7A03B7D-3C79-4A10-BED5-981441880557}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {86BB1435-2A71-459D-AF67-E0F1806DA313}
+	EndGlobalSection
+EndGlobal

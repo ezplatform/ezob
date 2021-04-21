@@ -1,0 +1,173 @@
+name: Flex Onboarding (Global)
+
+stages:
+  - stage: CreateTickets
+    displayName: Create tickets
+    tasks:
+      - task: CreateTicket
+        displayName: Create ticket for VPN/Remote Access
+        inputs:
+          url: https://sample.com
+          content: |
+            Step 1: Open your browser, copy and paste the request link.
+            Step 2: Login to access the request page.
+            Step 3: Fulfill form as bellow
+            - [blue](Open on behalf of this user)[/]: put your username
+            - [blue](Is this request for a new user or an existing user)[/]: Existing User
+            - [blue](Select the type of permission you need)[/]: Check both of (Remote Access) and (Sharepoint/RMS Knowledge Base/Release Notes)
+            - [blue](Select Product)[/]: Select product that you participate (eg. Flex)
+            - [blue](What Remote Access is Required?)[/]: put 'VPN and AWS environment'
+            - [blue](Describe your request)[/]: put 'RMS General Permission for VPN, and AWS environment'
+            - [blue](Email)[/]: put you email
+            Step 4: Click on [blue](Submit)[/] button
+
+  - stage: InstallSoftwares
+    displayName: Install Softwares
+    dependsOn: CreateTickets
+    tasks:
+      - task: InstallSoftware
+        displayName: Install Powershell Core
+        inputs:
+          assetAddress: https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/PowerShell-7.1.3-win-x64.msi
+          downloadFilename: PowerShell-7.1.3-win-x64.msi
+          autoInstallation: true
+          processFile: C:\Windows\System32\cmd.exe
+          command: |
+           /c start /wait msiexec.exe /package PowerShell-7.1.3-win-x64.msi /quiet ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=1 ENABLE_PSREMOTING=1 REGISTER_MANIFEST=1
+          validation:
+            pwsh: /c IF EXIST "C:\Program Files\PowerShell\7\pwsh.exe" echo ok
+
+      - task: InstallSoftware
+        displayName: Install choco (Software management for Window)
+        inputs:
+          command: |
+            [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+          validation:
+            pwsh: (Get-Command choco).Count
+
+      - task: InstallSoftware
+        displayName: Install GIT
+        inputs:
+          command: |
+            choco install git --yes --params '/GitAndUnixToolsOnPath'
+            choco install gitextensions --yes
+          validation:
+            pwsh: git --version
+
+      - task: InstallSoftware
+        displayName: Install LinqPad6
+        inputs:
+          command: choco install linqpad --yes
+          validation:
+            pwsh: Test-Path 'C:\Program Files\LINQPad6\LINQPad6.exe'
+
+      - task: InstallSoftware
+        displayName: Install OPENVPN Connect
+        inputs:
+          assetAddress: https://openvpn.net/downloads/openvpn-connect-v3-windows.msi
+          downloadFilename: openvpn.msi
+          command: MsiExec.exe /i openvpn.msi /qn
+          validation:
+            pwsh: Test-Path 'C:\Program Files\OpenVPN Connect\OpenVPNConnect.exe'
+
+      - task: InstallSoftware
+        displayName: Install Nodejs
+        inputs:
+          command: |
+            choco install nodejs-lts --yes
+            npm install --global --production npm-windows-upgrade
+            npm-windows-upgrade --npm-version latest
+            npm install --global windows-build-tools
+          validation:
+            pwsh: node -v
+
+      - task: InstallSoftware
+        displayName: Install Postman
+        inputs:
+          command: choco install postman --yes
+          validation:
+            pwsh: Test-Path '$env:LocalAppData\Postman\Postman.exe'
+
+      - task: InstallSoftware
+        displayName: Install Docker
+        inputs:
+          assetAddress: https://download.docker.com/win/enterprise/DockerDesktop.msi
+          downloadFilename: DockerDesktop.msi
+          command: MsiExec.exe /i DockerDesktop.msi /qn
+          validation:
+            pwsh: Test-Path 'C:\Program Files\Docker\Docker\DockerCli.exe'
+
+      - task: InstallSoftware
+        displayName: Install winscp (FTP tool)
+        inputs:
+          command: choco install winscp --yes
+          validation:
+            pwsh: Test-Path 'C:\Program Files (x86)\WinSCP\WinSCP.exe'
+
+      - task: InstallSoftware
+        displayName: Install VS Code
+        inputs:
+          command: |
+            choco install visualstudiocode --yes
+            code --install-extension vscode-icons-team.vscode-icons --force
+            code --install-extension coenraads.bracket-pair-colorizer --force
+            code --install-extension esbenp.prettier-vscode --force
+            code --install-extension hookyqr.beautify --force
+            code --install-extension ms-vscode.csharp --force
+          validation:
+            pwsh: code --version
+
+      - task: InstallSoftware
+        displayName: Install Slack
+        inputs:
+          assetAddress: https://downloads.slack-edge.com/releases/windows/4.14.0/prod/x64/slack-standalone-4.14.0.0.msi
+          downloadFilename: slack.msi
+          command: |
+            MsiExec.exe /i slack.msi /qn /norestart
+          validation:
+            pwsh: Test-Path '$env:LocalAppData\slack\slack.exe'
+
+      - task: InstallSoftware
+        displayName: Install 7zip
+        inputs:
+          assetAddress: https://www.7-zip.org/a/7z1900-x64.msi
+          downloadFilename: 7z1900.msi
+          command: MsiExec.exe /i 7z1900.msi /qn
+          validation:
+            pwsh: Test-Path 'C:\Program Files\7-Zip\7z.exe'
+
+      - task: InstallSoftware
+        displayName: Install Everything tool
+        inputs:
+          command: choco install everything --yes
+          validation:
+            pwsh: Test-Path 'C:\Program Files\Everything\Everything.exe'
+
+      - task: InstallSoftware
+        displayName: Install dbeaver
+        inputs:
+          command: choco install dbeaver --yes
+          validation:
+            pwsh: Test-Path 'C:\Program Files\DBeaver\dbeaver.exe'
+
+      - task: InstallSoftware
+        displayName: Install MS Teams
+        inputs:
+          assetAddress: https://statics.teams.cdn.office.net/production-windows-x64/1.4.00.8872/Teams_windows_x64.exe
+          downloadFilename: Teams_windows_x64.exe
+          command: Teams_windows_x64.exe -s ALLUSERS=1
+          validation:
+            pwsh: Test-Path '$env:LOCALAPPDATA\Microsoft\Teams\current\Teams.exe'
+
+  - stage: SourceCodeSetup
+    displayName: Source code setup
+    dependsOn: InstallSoftwares
+    tasks:
+      - task: SourceCodeCheckout
+        displayName: Checkout source code
+        inputs:
+          username: $(username)
+          password: $(password)
+          checkoutLocation: $(checkoutLocation)
+          sources:
+            - https://github.com/libgit2/libgit2sharp.git

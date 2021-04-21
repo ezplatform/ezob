@@ -1,0 +1,38 @@
+<Project>
+  <PropertyGroup>
+    <Product>Flex Onboarding</Product>
+
+    <Authors>Raymond - Toan Nguyen</Authors>
+    <Copyright>Raymond - Toan Nguyen</Copyright>
+
+    <!-- Suppress warnings about using SemVer 2.0. -->
+    <NoWarn>$(NoWarn);NU5105;</NoWarn>
+
+    <IncludeSource>true</IncludeSource>
+    <IncludeSymbols>true</IncludeSymbols>
+  </PropertyGroup>
+
+  <!-- Source code settings -->
+  <PropertyGroup>
+    <RepositoryRoot>$(MSBuildThisFileDirectory)</RepositoryRoot>
+    <RepositoryUrl>https://github.com/ezplatform/ezob</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+
+    <!-- https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/configure-language-version#c-language-version-reference -->
+    <LangVersion>9.0</LangVersion>
+    <Nullable>enable</Nullable>
+
+    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)\ezob.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GenerateCommitHashAttribute Condition="'$(RepositoryCommit)'==''">false</GenerateCommitHashAttribute>
+    <GenerateSourceLinkFile>false</GenerateSourceLinkFile>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.333" PrivateAssets="all" />
+  </ItemGroup>
+</Project>

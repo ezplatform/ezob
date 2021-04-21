@@ -1,0 +1,229 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://ezplatform.com/ezob/ezob.schema.json",
+    "title": "Onboarding Configuration",
+    "description": "Configuration file schema for ezob.",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+        "name",
+        "stages"
+    ],
+    "properties": {
+        "name": {
+            "description": "The welcome text.",
+            "type": "string"
+        },
+        "stages": {
+            "description": "Group of stage.",
+            "type": "array",
+            "required": [
+                "stage",
+                "displayName",
+                "tasks"
+            ],
+            "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "stage": {
+                        "description": "Stage name.",
+                        "type": "string",
+                        "enum": [
+                            "CreateTickets",
+                            "InstallSoftwares",
+                            "SourceCodeSetup"
+                        ]
+                    },
+                    "displayName": {
+                        "description": "Display name.",
+                        "type": "string"
+                    },
+                    "dependsOn": {
+                        "description": "Depends on.",
+                        "type": "string"
+                    },
+                    "tasks": {
+                        "description": "Tasks.",
+                        "type": "array",
+                        "required": [
+                            "task",
+                            "displayName",
+                            "inputs"
+                        ],
+                        "items": {
+                            "type": "object",
+                            "required": [
+                                "task",
+                                "displayName",
+                                "inputs"
+                            ],
+                            "anyOf": [
+                                {
+                                    "$ref": "#/definitions/createTicket"
+                                },
+                                {
+                                    "$ref": "#/definitions/installSoftware"
+                                },
+                                {
+                                    "$ref": "#/definitions/sourceCodeCheckout"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "createTicket": {
+            "additionalProperties": false,
+            "properties": {
+                "task": {
+                    "description": "Task.",
+                    "type": "string",
+                    "enum": [
+                        "CreateTicket"
+                    ]
+                },
+                "displayName": {
+                    "description": "Display name.",
+                    "type": "string"
+                },
+                "inputs": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "dependencies": {},
+                    "properties": {
+                        "url": {
+                            "description": "URL.",
+                            "type": "string"
+                        },
+                        "content": {
+                            "description": "Content.",
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "installSoftware": {
+            "additionalProperties": false,
+            "properties": {
+                "task": {
+                    "description": "Task.",
+                    "type": "string",
+                    "enum": [
+                        "InstallSoftware"
+                    ]
+                },
+                "displayName": {
+                    "description": "Display name.",
+                    "type": "string"
+                },
+                "inputs": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "command": {
+                            "description": "Command.",
+                            "type": "object",
+                            "oneOf": [
+                                {
+                                    "$ref": "#/definitions/cmdType"
+                                },
+                                {
+                                    "$ref": "#/definitions/pwshType"
+                                }
+                            ]
+                        },
+                        "validation": {
+                            "description": "Validation.",
+                            "type": "object",
+                            "oneOf": [
+                                {
+                                    "$ref": "#/definitions/cmdType"
+                                },
+                                {
+                                    "$ref": "#/definitions/pwshType"
+                                }
+                            ]
+                        },
+                        "assetAddress": {
+                            "description": "Asset Address.",
+                            "type": "string"
+                        },
+                        "downloadFilename": {
+                            "description": "Download file name.",
+                            "type": "string"
+                        },
+                        "autoInstallation": {
+                            "description": "Auto installation when app started.",
+                            "type": "boolean"
+                        },
+                        "processFile": {
+                            "description": "Process file, eg. C:\\Windows\\System32\\cmd.exe.",
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "sourceCodeCheckout": {
+            "additionalProperties": false,
+            "properties": {
+                "task": {
+                    "description": "Task.",
+                    "type": "string",
+                    "enum": [
+                        "SourceCodeCheckout"
+                    ]
+                },
+                "displayName": {
+                    "description": "Display name.",
+                    "type": "string"
+                },
+                "inputs": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "username": {
+                            "description": "Username.",
+                            "type": "string"
+                        },
+                        "password": {
+                            "description": "Password.",
+                            "type": "string"
+                        },
+                        "checkoutLocation": {
+                            "description": "Checkout location.",
+                            "type": "string"
+                        },
+                        "sources": {
+                            "description": "Sources.",
+                            "type": "array"
+                        }
+                    }
+                }
+            }
+        },
+        "cmdType": {
+            "additionalProperties": false,
+            "properties": {
+                "cmd": {
+                    "description": "cmd.exe.",
+                    "type": "string"
+                }
+            }
+        },
+        "pwshType": {
+            "additionalProperties": false,
+            "properties": {
+                "pwsh": {
+                    "description": "Powershell.",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
