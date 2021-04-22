@@ -160,10 +160,6 @@
                         "autoInstallation": {
                             "description": "Auto installation when app started.",
                             "type": "boolean"
-                        },
-                        "processFile": {
-                            "description": "Process file, eg. C:\\Windows\\System32\\cmd.exe.",
-                            "type": "string"
                         }
                     }
                 }
