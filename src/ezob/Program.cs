@@ -22,7 +22,7 @@ namespace ezob
 #if DEBUG
             if (args is null || args.Length == 0)
             {
-                args = new[] { "run", @"D:\workplace\ezob\src\samples\fsoft-ezob.yml", "--user-variables", "UserName=name@email.com", "Password=your_password", "CheckoutLocation=E:\\Projects" };
+                args = new[] { "run", @".\..\..\..\..\samples\internet-ezob.yml", "--user-variables", "UserName=name@email.com", "Password=your_password", "CheckoutLocation=E:\\Projects" };
             }
 #endif
             var command = new RootCommand
