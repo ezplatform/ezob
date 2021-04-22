@@ -1,7 +1,7 @@
 using System.CommandLine;
 using EzPlatform.EzOnboarding.Core;
 
-namespace ezob
+namespace EzPlatform.EzOnboarding
 {
     public static class StandardOptions
     {

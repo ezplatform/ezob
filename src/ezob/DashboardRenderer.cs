@@ -5,7 +5,7 @@ using EzPlatform.EzOnboarding.Core;
 using EzPlatform.EzOnboarding.Core.ConfigModel;
 using Spectre.Console;
 
-namespace ezob
+namespace EzPlatform.EzOnboarding
 {
     public class DashboardRenderer
     {
@@ -20,8 +20,6 @@ namespace ezob
 
         public async Task RenderDashboard(ConfigApplication configApplication)
         {
-            // TODO: apply nullable
-
             _context.Console.Clear(true);
             Tree stepTree = null;
             await _context.Console.Status()

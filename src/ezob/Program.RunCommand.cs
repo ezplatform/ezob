@@ -9,7 +9,7 @@ using EzPlatform.EzOnboarding.Core.ConfigModel;
 using EzPlatform.EzOnboarding.Core.ConfigModel.Input;
 using Spectre.Console;
 
-namespace ezob
+namespace EzPlatform.EzOnboarding
 {
     /// <summary>
     /// Program.RunCommand class.

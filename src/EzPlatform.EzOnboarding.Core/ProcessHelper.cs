@@ -30,7 +30,7 @@ namespace EzPlatform.EzOnboarding.Core
             Action<int>? onStop = null,
             CancellationToken cancellationToken = default)
         {
-            using var process = new Process()
+            using var process = new Process
             {
                 StartInfo =
                 {
@@ -94,22 +94,10 @@ namespace EzPlatform.EzOnboarding.Core
                 }
             };
 
-            var processLifetimeTask = new TaskCompletionSource<ProcessResult>();
-
-            process.Exited += (_, e) =>
+            var processExitEvent = new TaskCompletionSource<object>();
+            process.Exited += (sender, args) =>
             {
-                // Even though the Exited event has been raised, WaitForExit() must still be called to ensure the output buffers
-                // have been flushed before the process is considered completely done.
-                process.WaitForExit();
-
-                if (throwOnError && process.ExitCode != 0)
-                {
-                    processLifetimeTask.TrySetException(new InvalidOperationException($"Command {filename} {arguments} returned exit code {process.ExitCode}"));
-                }
-                else
-                {
-                    processLifetimeTask.TrySetResult(new ProcessResult(outputBuilder.ToString(), errorBuilder.ToString(), process.ExitCode));
-                }
+                processExitEvent.TrySetResult(true);
             };
 
             process.Start();
@@ -118,12 +106,15 @@ namespace EzPlatform.EzOnboarding.Core
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
 
-            var cancelledTcs = new TaskCompletionSource<object?>();
-            await using var reg = cancellationToken.Register(() => cancelledTcs.TrySetResult(null));
+            process.WaitForExit();
 
-            var result = await Task.WhenAny(processLifetimeTask.Task, cancelledTcs.Task);
+            var processResult = new ProcessResult();
 
-            if (result == cancelledTcs.Task)
+            await processExitEvent.Task;
+            processResult.ExitCode = process.ExitCode;
+
+            // -> Timeout, let's kill the process
+            try
             {
                 if (!_isWindows)
                 {
@@ -136,28 +127,31 @@ namespace EzPlatform.EzOnboarding.Core
                         process.Kill();
                     }
                 }
-
-                if (!process.HasExited)
-                {
-                    var cancel = new CancellationTokenSource();
-                    await Task.WhenAny(processLifetimeTask.Task, Task.Delay(TimeSpan.FromSeconds(5), cancel.Token));
-                    cancel.Cancel();
-
-                    if (!process.HasExited)
-                    {
-                        process.Kill();
-                    }
-                }
+            }
+            catch
+            {
+                // ignored
             }
 
-            var processResult = await processLifetimeTask.Task;
-            onStop?.Invoke(processResult.ExitCode);
+            processResult.StandardOutput = outputBuilder.ToString();
+            processResult.StandardError = errorBuilder.ToString();
+
             return processResult;
         }
 
         public static Task<ProcessResult> RunAsync(ProcessSpec processSpec, CancellationToken cancellationToken = default, bool throwOnError = true)
         {
-            return RunAsync(processSpec.Executable!, processSpec.Arguments!, processSpec.WorkingDirectory, throwOnError: throwOnError, processSpec.EnvironmentVariables, processSpec.OutputData, processSpec.ErrorData, processSpec.OnStart, processSpec.OnStop, cancellationToken);
+            return RunAsync(
+                processSpec.Executable!,
+                processSpec.Arguments!,
+                processSpec.WorkingDirectory,
+                throwOnError: throwOnError,
+                processSpec.EnvironmentVariables,
+                processSpec.OutputData,
+                processSpec.ErrorData,
+                processSpec.OnStart,
+                processSpec.OnStop,
+                cancellationToken);
         }
 
         public static void KillProcess(int pid)

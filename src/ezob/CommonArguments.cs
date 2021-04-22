@@ -4,7 +4,7 @@ using System.CommandLine.Parsing;
 using System.IO;
 using EzPlatform.EzOnboarding.Core;
 
-namespace ezob
+namespace EzPlatform.EzOnboarding
 {
     internal static class CommonArguments
     {
