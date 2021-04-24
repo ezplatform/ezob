@@ -7,6 +7,7 @@
     <AssemblyName>ezob</AssemblyName>
     <PackageId>EzPlatform.EzOnboarding</PackageId>
     <ToolCommandName>ezob</ToolCommandName>
+    <PackageVersion>1.0.1</PackageVersion>
     <PackAsTool>true</PackAsTool>
   </PropertyGroup>
 
