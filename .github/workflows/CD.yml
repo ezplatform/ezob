@@ -5,7 +5,7 @@ on:
     branches:
       - main
   pull_request:
-    # types: [closed]
+    types: [closed]
     branches:
       - main
 
@@ -37,7 +37,6 @@ jobs:
           PROJECT_FILE_PATH: /home/runner/work/ezob/ezob/src/ezob/ezob.csproj
           VERSION_REGEX: ^\s*<PackageVersion>(.*)<\/PackageVersion>\s*$
           TAG_FORMAT: v*
-          NUGET_KEY: oy2ita3j7hk3yhnnyxlqapgt37gaepwuzfqiikhw4goe4y
-          # NUGET_KEY: ${{secrets.NUGET_API_KEY}} 
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}} 
           
      
