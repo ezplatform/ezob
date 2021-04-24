@@ -5,7 +5,7 @@ on:
     branches:
       - main
   pull_request:
-    types: [closed]
+    # types: [closed]
     branches:
       - main
 
@@ -22,10 +22,10 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '5.0.x'       
-          
-      - name: Build solution and generate NuGet package
-        run: | 
-          dotnet pack -c Release -o out
 
-      - name: Push generated package to GitHub registry
-        run: dotnet nuget push ./out/*.nupkg --skip-duplicate --no-symbols true --api-key oy2ita3j7hk3yhnnyxlqapgt37gaepwuzfqiikhw4goe4y --source https://api.nuget.org/v3/index.json
+      - name: Publish  
+        uses: brandedoutcast/publish-nuget@v2.5.2  
+        with:   
+          PROJECT_FILE_PATH: ezob.sln
+          NUGET_KEY: oy2ita3j7hk3yhnnyxlqapgt37gaepwuzfqiikhw4goe4y
+          # NUGET_KEY: ${{secrets.NUGET_API_KEY}} 
