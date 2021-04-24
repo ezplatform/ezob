@@ -1,0 +1,40 @@
+name: NuGet Generation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Update NuGet package
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      - name: Setup .NET 5
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.x'       
+      
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Build solution
+        run:  dotnet build --configuration Release --no-restore 
+
+      - name: Publish to Nuget
+        uses: brandedoutcast/publish-nuget@v2.5.5
+        with:   
+          PROJECT_FILE_PATH: /home/runner/work/ezob/ezob/src/ezob/ezob.csproj
+          VERSION_REGEX: ^\s*<PackageVersion>(.*)<\/PackageVersion>\s*$
+          TAG_FORMAT: v*
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}} 
+          
+     
