@@ -34,7 +34,7 @@ jobs:
       - name: Publish to Nuget
         uses: brandedoutcast/publish-nuget@v2.5.2  
         with:   
-          PROJECT_FILE_PATH: .\src\ezob\ezob.csproj
+          PROJECT_FILE_PATH: /home/runner/work/ezob/ezob/src/ezob/ezob.csproj
           VERSION_REGEX: '^\s*<PackageVersion>(.*)<\/PackageVersion>\s*$'
           TAG_FORMAT: '*'
           NUGET_KEY: oy2ita3j7hk3yhnnyxlqapgt37gaepwuzfqiikhw4goe4y
