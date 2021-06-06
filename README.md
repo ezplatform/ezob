@@ -10,6 +10,7 @@ Also, support for a comprehensive list of other git clone options.
 
 ## Get Started
 Follow the [Ezob Configuration](https://github.com/ezplatform/ezob/blob/main/docs/ezob-configuration.md) instruction to get closer to setting up your ezob.
+Follow the [Ezob Deployment](https://github.com/ezplatform/ezob/blob/main/docs/ezob-deployment.md) instruction to get closer to deploy your ezob.
 
 ## Main Contributors:
 - Raymond - Toan Nguyen (@toanxyz)
@@ -21,3 +22,4 @@ Follow the [Ezob Configuration](https://github.com/ezplatform/ezob/blob/main/doc
   - GitHub: [toanxyz](https://github.com/toanxyz)
   - [Blog](https://toannm.com/)
   - [Twitter](https://twitter.com/toannm4)
+
